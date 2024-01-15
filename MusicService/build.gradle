@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace rootProject.ext.android.musicService
+    compileSdk rootProject.ext.android.compileSdk
+
+    defaultConfig {
+        minSdk rootProject.ext.android.minSdk
+        targetSdk rootProject.ext.android.targetSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
+                /*
+                Room 具有以下注释处理器选项：
+                room.schemaLocation：配置并启用将数据库架构导出到给定目录中的 JSON 文件的功能。
+                                    [创建好表和数据库后编译，会在 app/schemas 目录下生成这个 JSON 文件]
+                room.incremental：启用 Gradle 增量注释处理器。
+                room.expandProjection：配置 Room 以重写查询，使其顶部星形投影在展开后仅包含 DAO 方法返回类型中定义的列。
+                */
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        preview {
+        }
+    }
+}
+
+dependencies {
+    //Music Base
+    implementation project(':MusicBase')
+}
